@@ -7,7 +7,6 @@ import ServicesPage from './components/pages/ServicesPage.vue';
 
 const routes = [
   { path: '/', component: ProductCatalogue },
-  { path: '/products', component: ProductCatalogue },
   { path: '/checkout', component: CheckoutPage },
   { path: '/about', component: AboutPage },
   { path: '/contact', component: ContactPage },

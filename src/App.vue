@@ -1,12 +1,12 @@
 <template>
-  <div id="app" class="flex flex-col min-h-screen">
+  <div id="app" class="flex flex-col min-h-screen bg-white">
     <NavigationBar class="fixed top-0  w-full" />
     
     <div class="flex-grow pt-4 md:pt-16 pb-16 overflow-auto"> <!-- adjust padding as needed -->
       <router-view v-slot="{ Component }">
-        <transition name="fade" mode="out-in">
+        <!-- <transition name="fade" mode="out-in"> -->
           <component :is="Component" />
-        </transition>
+        <!-- </transition> -->
       </router-view>
     </div>
     
@@ -14,15 +14,27 @@
   </div>
 </template>
 
-
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref, provide } from 'vue';
 import NavigationBar from './components/shared/NavigationBar.vue'; // Adjust the path to match your file structure
 import FooterBar from './components/shared/FooterBar.vue';
+import { CartItem } from './components/composables/useCart'; // Adjust the path to match your file structure
+
 
 export default defineComponent({
   components: {
-    NavigationBar,FooterBar
+    NavigationBar,
+    FooterBar
+  },
+  setup() {
+    const cart = ref<CartItem[]>([]);
+    
+    // Provide the cart state for child components to inject
+    provide('cart', cart);
+
+    return {
+      cart
+    };
   },
 });
 </script>

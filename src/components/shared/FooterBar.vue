@@ -1,9 +1,10 @@
 <template>
-    <div class="bg-orange-500 min-h-52 w-full p-6 pb-36 mt-24 navbar-animated">
+    <div class="bg-white min-h-52 w-full p-6 pb-36 mt-24 navbar-animated">
         <!-- <img src="/BEARSHOP-BAG.svg" alt="Logo" class="h-16 w-32 mr-2 mb-4" /> -->
-        <div class="text-white text-xl font-bold">CITYPASS</div>
+            <img src="AKTI-B.svg" alt="Logo" class="h-8 mr-2" />
+
         <!-- Footer Links -->
-        <div class="flex justify-between mt-4 text-white font-bold">
+        <div class="flex justify-between mt-4 text-black font-bold">
             <!-- Information Links -->
             <div class="w-1/3">
                 <ul>

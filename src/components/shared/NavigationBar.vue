@@ -1,33 +1,28 @@
 <template>
-  <nav class="sticky topnav top-0 mb-12 pl-8 pr-8 pb-4 pt-4 bg-orange-500 flex justify-between items-center border-b border-orange-500">
+  <nav class="topnav top-0 mb-4 pl-8 pr-8 pt-4 pb-4 bg-white flex justify-between items-center">
     <!-- Logo -->
     <router-link to="/">
       <div class="flex items-center">
-        <div class="text-white text-xl font-bold">CITYPASS</div>
+        <img src="DZOLE.svg" alt="Logo" class="h-8 w-42 mr-2" />
       </div>
  
     </router-link>
     <!-- Desktop View Links -->
-    <div class="hidden md:flex space-x-4">
-      <router-link to="/contact" class="text-white font-bold hover:bg-orange-600 px-2 py-1 rounded">Contact</router-link>
-      <router-link to="/about" class="text-white font-bold hover:bg-orange-600 px-2 py-1 rounded">About</router-link>
-      <router-link to="/services" class="text-white font-bold hover:bg-orange-600 px-2 py-1 rounded">Services</router-link>
+    <div class="hidden md:flex space-x-4 text-left">
+      <router-link to="/contact" class="text-slate-950 font-bold hover:font-bold px-2 py-1 rounded">T-SHIRTS</router-link>
+      <router-link to="/about" class="text-slate-950 font-bold hover:bg-orange-600 px-2 py-1 rounded">MUGS</router-link>
+      <router-link to="/services" class="text-slate-950 font-bold hover:bg-orange-600 px-2 py-1 rounded">NEW</router-link>
     </div>
 
     <!-- Icons and Dropdown -->
     <div ref="dropdownWrapper" class="flex items-center">
-      <button @click="toggleDropdown" class="bg-gray-200 mr-2 text-black p-2 rounded">
+      <!-- <button @click="toggleDropdown" class="bg-gray-200 mr-2 text-black p-2 rounded">
         {{ currentFlag }} ▼
+      </button> -->
+      <button @click="goToCart" class="bg-white font-bold text-black p-2 rounded">
+        BAG ( {{ totalItems }} )
       </button>
-      <button @click="goToCart" class="bg-amber-500 text-white p-2 rounded">
-        <font-awesome-icon icon="cart-shopping" class="mr-2" />{{ cartLength }}
-      </button>
-      <div v-if="showDropdown" ref="dropdown" class="absolute right-24 top-12 mt-8 w-48 rounded-md shadow-lg bg-gray-100 z-3000">
-        <div class="py-1">
-          <button @click="setLanguage('en')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-400 w-full text-left">🇬🇧 {{ t('English') }}</button>
-          <button @click="setLanguage('fr')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-400 w-full text-left">🇫🇷 {{ t('Francais') }}</button>
-        </div>
-      </div>
+
     </div>
        <!-- Mobile View with Hamburger Button -->
        <div class="md:hidden">
@@ -45,8 +40,7 @@
 </template>
 
 <script lang="ts">
-import { ref, computed, watch, onUnmounted } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { ref, watch, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCart } from '../composables/useCart';
 // Adjust the path accordingly
@@ -56,8 +50,7 @@ export default {
   name: 'Navbar',
   setup() {
     const router = useRouter();
-    const { cartLength } = useCart();
-    const { t, locale } = useI18n();
+    const { totalItems } = useCart();
     const dropdownRef = ref<HTMLElement | null>(null);
     const dropdownWrapper = ref<HTMLElement | null>(null);
     const showDropdown = ref(false);
@@ -71,22 +64,7 @@ export default {
       router.push('/checkout');
     };
 
-    const setLanguage = (language: string) => {
-      locale.value = language;
-      console.log("Current locale:", locale.value); 
-    };
-
-    const currentFlag = computed(() => {
-      switch (locale.value) {
-        case 'en':
-          return '🇬🇧';
-        case 'fr':
-          return '🇫🇷';
-        default:
-          return '';
-      }
-    });
-
+  
     const toggleMobileMenu = () => { // added to toggle mobile menu visibility
       showMobileMenu.value = !showMobileMenu.value;
     };
@@ -111,12 +89,9 @@ export default {
 
     return {
       goToCart,
-      cartLength,
-      setLanguage,
-      t,
+      totalItems,
       showDropdown,
       toggleDropdown,
-      currentFlag,
       dropdownRef,
       dropdownWrapper,
       showMobileMenu,     // expose the mobile menu visibility ref
@@ -145,4 +120,3 @@ export default {
 }
 
 </style>
-

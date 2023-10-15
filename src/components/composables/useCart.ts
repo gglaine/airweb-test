@@ -1,62 +1,66 @@
 import { ref, computed } from 'vue';
 import { Product } from '../types';
 
-interface CartItem {
+export interface CartItem {
   product: Product;
   quantity: number;
+  color: string;
+  size: string;
 }
 
-const cart = ref<CartItem[]>([]); // Refactor cart to contain CartItems
-const showFlashNotification = ref(false);
-const buttonAnimation = ref<Set<string>>(new Set());
+
+const cartItems = ref<CartItem[]>([]);
 
 export function useCart() {
 
-  const addToCart = (product: Product) => {
-    console.log("Button clicked!");
+  const findCartItem = (product: Product) => {
+    return cartItems.value.find(item => item.product.id === product.id);
+  };
 
-    // Check if product is already in the cart
-    const existingCartItem = cart.value.find(item => item.product.id === product.id);
+  const addToCart = (product: Product, quantity: number, color: string, size: string) => {
+    console.log("addToCart method called with:", product, quantity, color, size);
+    const existingCartItem = findCartItem(product);
 
     if (existingCartItem) {
-      // If product is in the cart, increment its quantity
-      existingCartItem.quantity++;
+      existingCartItem.quantity += quantity;
     } else {
-      // If product is not in the cart, add it with quantity 1
-      cart.value.push({
-        product: product,
-        quantity: 1
-      });
+      cartItems.value.push({ product, quantity, color, size });
+
     }
+    console.log("Current Cart:", cartItems.value);
+  };
 
-    buttonAnimation.value.add(product.id); // Add product ID to the set
+  const increaseQuantity = (product: Product) => {
+    const existingCartItem = findCartItem(product);
+    if (existingCartItem) {
+      existingCartItem.quantity++;
+    }
+  };
 
-    setTimeout(() => {
-      buttonAnimation.value.delete(product.id); // Remove it after animation is done
-    }, 3000); // Assuming animation duration is 2 seconds
-    
-    showFlashNotification.value = true;
-    setTimeout(() => {
-      showFlashNotification.value = false;
-    }, 1000); // Hide after 1 second
+  const decreaseQuantity = (product: Product) => {
+    const existingCartItem = findCartItem(product);
+    if (existingCartItem && existingCartItem.quantity > 1) {
+      existingCartItem.quantity--;
+    }
   };
 
   const removeFromCart = (product: Product) => {
-    const index = cart.value.findIndex(item => item.product.id === product.id);
+    const index = cartItems.value.findIndex(item => item.product.id === product.id);
     if (index > -1) {
-      cart.value.splice(index, 1);
+      cartItems.value.splice(index, 1);
     }
   };
-  
-  const cartLength = computed(() => {
-    return cart.value.reduce((sum, cartItem) => sum + cartItem.quantity, 0);
+
+  const totalItemsInCart = computed(() => {
+    return cartItems.value.reduce((sum, cartItem) => sum + cartItem.quantity, 0);
   });
 
   return {
-    cart,
+    cart: cartItems,
     addToCart,
     removeFromCart,
-    cartLength,
-    buttonAnimation // Export this ref
+    increaseQuantity,
+    decreaseQuantity,
+    totalItems: totalItemsInCart
   };
 }

@@ -1,0 +1,43 @@
+[
+    {
+      "id": "1",
+      "label": "Classic White Tee",
+      "description": "A classic white t-shirt made of 100% cotton. Perfect for everyday wear.",
+      "price": 1999,
+      "size": "M",
+      "color": "White",
+      "material": "100% Cotton",
+      "thumbnail_url": "path_to_white_tee_image.jpg"
+    },
+    {
+      "id": "2",
+      "label": "Graphic Blue Tee",
+      "description": "A vibrant blue t-shirt with a front graphic design. Soft and comfortable.",
+      "price": 2499,
+      "size": "L",
+      "color": "Blue",
+      "material": "95% Cotton, 5% Spandex",
+      "thumbnail_url": "path_to_blue_tee_image.jpg"
+    },
+    {
+      "id": "3",
+      "label": "Striped Green Tee",
+      "description": "Green and white striped t-shirt. Casual and stylish.",
+      "price": 2199,
+      "size": "S",
+      "color": "Green",
+      "material": "90% Cotton, 10% Polyester",
+      "thumbnail_url": "path_to_green_tee_image.jpg"
+    },
+    {
+      "id": "4",
+      "label": "Black Pocket Tee",
+      "description": "Solid black t-shirt with a chest pocket. Versatile and essential.",
+      "price": 2099,
+      "size": "XL",
+      "color": "Black",
+      "material": "100% Cotton",
+      "thumbnail_url": "path_to_black_tee_image.jpg"
+    }
+  ]
+  
